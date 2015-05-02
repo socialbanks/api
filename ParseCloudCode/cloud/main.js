@@ -17,11 +17,7 @@ Parse.Cloud.define("get_balances", function (request, response) {
                                            "filters": {
                                            "field": "address",
                                            "op": "IN",
-                                           "value": [
-                                                     "1Ko36AjTKYh6EzToLU737Bs2pxCsGReApK",
-                                                     "1BdHqBSfUqv77XtBSeofH6XwHHczZxKRUF",
-                                                     "1sEAUJsjuYJ9P64Y2MxchwyDfw8hbQDNA"
-                                                     ]
+                                           "value": [ request.params.address ]
                                            }
                                            }
                                            },
