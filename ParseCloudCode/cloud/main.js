@@ -5,6 +5,13 @@ Parse.Cloud.define("hello", function (request, response) {
 
 Parse.Cloud.define("get_balances", function (request, response) {
 
+	var method = "get_balances";
+	
+	if (request.params.cause_error)
+	{
+		method = "unexistent_method";
+	}
+	
     Parse.Cloud.httpRequest({
         method: 'POST',
         url: 'http://counterparty:1234@xcp-dev.vennd.io:4000/api/',
@@ -12,7 +19,7 @@ Parse.Cloud.define("get_balances", function (request, response) {
           {
               "jsonrpc": "2.0",
               "id": 0,
-              "method": "get_balances",
+              "method": method,
               "params": {
                   "filters": {
                       "field": "address",
