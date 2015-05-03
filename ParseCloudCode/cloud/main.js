@@ -3,10 +3,41 @@ Parse.Cloud.define("hello", function (request, response) {
 });
 
 
-Parse.Cloud.define("get_balances", function (request, response) {
+Parse.Cloud.define("create_issuance", function (request, response) {
+	InvokeMethodCounterparty(
+		request, 
+		response, 
+		"create_issuance",
+		{
+			"source":"", 
+			"asset":"", 
+			"quantity":"", 
+			"divisible":"", 
+			"description":""
+		}
+	);
+});
 
-	var method = "get_balances";
-	
+Parse.Cloud.define("get_balances", function (request, response) {
+	InvokeMethodCounterparty(
+		request, 
+		response, 
+		"get_balances",
+		{
+			"filters": 
+			{
+				"field": "address",
+				"op": "IN",
+				"value": request.params.address
+			}
+		}
+	);
+});
+
+
+function InvokeMethodCounterparty(request, response, method, params) {
+
+
 	if (request.params.cause_error)
 	{
 		method = "unexistent_method";
@@ -20,13 +51,7 @@ Parse.Cloud.define("get_balances", function (request, response) {
               "jsonrpc": "2.0",
               "id": 0,
               "method": method,
-              "params": {
-                  "filters": {
-                      "field": "address",
-                      "op": "IN",
-                      "value": request.params.address
-                  }
-              }
+              "params": params             
           },
 
         headers: {
@@ -46,4 +71,4 @@ Parse.Cloud.define("get_balances", function (request, response) {
         }
     });
 
-});
+}
