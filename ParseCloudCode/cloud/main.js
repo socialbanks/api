@@ -9,11 +9,10 @@ Parse.Cloud.define("create_issuance", function (request, response) {
 		response, 
 		"create_issuance",
 		{
-			"source":"", 
-			"asset":"", 
-			"quantity":"", 
-			"divisible":"", 
-			"description":""
+			"source"      : request.params.source, 
+			"asset"       : request.params.asset, 
+			"quantity"    : request.params.quantity, 
+			"description" : request.params.description
 		}
 	);
 });
