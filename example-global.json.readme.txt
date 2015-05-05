@@ -1,0 +1,3 @@
+  - move the file example-global.json for ParseCloudCode/config
+  - name it global.json
+  - fill the strings "---" with the actual keys
