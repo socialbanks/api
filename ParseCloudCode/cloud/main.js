@@ -1,8 +1,16 @@
+//yay
 var hello = require('cloud/hello.js');
 Parse.Cloud.define("hello", hello.func);
 
 var get_balances = require('cloud/get_balances.js');
 Parse.Cloud.define("get_balances", get_balances.func);
+
+var get_credits = require('cloud/get_credits.js');
+Parse.Cloud.define("get_credits", get_credits.func);
+
+var get_debits = require('cloud/get_debits.js');
+Parse.Cloud.define("get_debits", get_debits.func);
+
 
 var create_issuance = require('cloud/create_issuance.js');
 Parse.Cloud.define("create_issuance", create_issuance.func);
