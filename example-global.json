@@ -4,8 +4,8 @@
   },
   "applications": {
     "SocialBanks-DEV": {
-      "applicationId": "bCOd9IKjrpxCPGYQfyagabirn7pYFjYTvJqkq1x1",
-      "masterKey": "bpT6nOoWdwU9zTCbOYN0dOeR3X2ZX2E6t5NQTS8d"
+      "applicationId": "---",
+      "masterKey": "---"
     },
     "_default": {
       "link": "SocialBanks-DEV"
