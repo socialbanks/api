@@ -24,10 +24,13 @@ exports.func = function (request, response, method, params) {
         },
         error: function (httpResponse) {
             response.success(
-                "Request failed with response code " +
-                httpResponse.status +
-                "\n" +
-                httpResponse.text
+				{
+					error: 
+					{
+						code: httpResponse.status,
+						message: httpResponse.text
+					}
+				}
                 );
         }
     });
