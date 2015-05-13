@@ -21,3 +21,6 @@ Parse.Cloud.define("send", f.func);
 var create_wallet = require('cloud/create_wallet.js');
 Parse.Cloud.define("create_wallet", create_wallet.func);
 
+var send_social_money = require('cloud/send_social_money.js');
+Parse.Cloud.define("send_social_money", send_social_money.func);
+
