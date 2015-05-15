@@ -30,10 +30,15 @@ exports.func = function (request, response) {
                         response.error("User tried to access another user wallet");
                         return;                        
                     }
+                    
+                    console.log("valueInCents");
+                    console.log(params.valueInCents);
+                    console.log("balance");
+                    console.log(senderWallet.get("balance"));
 
                     //check if the sender wallet is really owned by the logged user
-                    if (params.valueInCents > (100*senderWallet.get("balance"))) {
-                        response.error("Wallet don't have sufficient balance to withdraw " + params.value.toString());
+                    if (params.valueInCents > senderWallet.get("balance")) {
+                        response.error("Wallet don't have sufficient balance to withdraw " + params.valueInCents.toString());
                         return;                        
                     }
 
