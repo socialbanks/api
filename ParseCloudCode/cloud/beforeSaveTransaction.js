@@ -1,24 +1,22 @@
-var InvokeMethodCounterparty = require('cloud/InvokeMethodCounterparty.js');
-
+//beforeSaveTransaction
 exports.func = function (request, response) {
-    
+
     var params, senderWallet, querySenderWallet, receiverWallet, queryReceiverWallet;
     
     params = {
-        //asset: request.params.asset,
-        senderAddress: request.params.senderAddress,
-        receiverAddress: request.params.receiverAddress,
-        valueInCents: request.params.valueInCents,
-        description: request.params.description,
-        //txId: request.params.txId,
-        signedRawTransaction: request.params.signedRawTransaction,
+        senderWallet: request.object.get("senderWallet").id,
+        receiverWallet: request.object.get("receiverWallet").id,
+        valueInCents: request.object.get("value"),
+        senderDescription: request.object.get("senderDescription"),
+        receiverDescription: request.object.get("receiverDescription"),
+        bitcoinTx: request.object.get("bitcoinTx"),
     };
-            
+    
     //Recover the sender wallet object
     querySenderWallet = new Parse.Query("Wallet");
     querySenderWallet.include("user");
     querySenderWallet.include("socialBank");
-    querySenderWallet.equalTo("bitcoinAddress", params.senderAddress);
+    querySenderWallet.equalTo("objectId", params.senderWallet);
     querySenderWallet.find({
         success: function(results) {
             switch (results.length) {
@@ -39,7 +37,7 @@ exports.func = function (request, response) {
 
                     //Recover the receiver wallet object
                     queryReceiverWallet = new Parse.Query("Wallet");
-                    queryReceiverWallet.equalTo("bitcoinAddress", params.receiverAddress);
+                    queryReceiverWallet.equalTo("objectId", params.receiverWallet);
                     queryReceiverWallet.find({
                         success: function(results) {
                             switch (results.length) {
@@ -62,29 +60,9 @@ exports.func = function (request, response) {
                                     //}
                                     
                                     Parse.Cloud.useMasterKey();
-                                                                        
-                                    //Record the new transaction
-                                    var Transaction = Parse.Object.extend("Transaction");
-                                    var trans = new Transaction();
-
-                                    trans.set("value", params.valueInCents);
-                                    trans.set("socialBank", senderWallet.get("socialBank"));
-                                    trans.set("senderDescription", params.description);
-                                    trans.set("receiverDescription", "Received from ?????");
-                                    trans.set("senderWallet", senderWallet);
-                                    trans.set("receiverWallet", receiverWallet);
-                                    trans.set("bitcoinTx", params.signedRawTransaction);
-
-                                    trans.save(null, {
-                                        success: function(trans) {
-                                            //trans.id ....
-                                        },
-                                        error: function(trans, error) {
-                                            response.error("Couldn't save the transaction: " + error.message);
-                                            return;                                                                
-                                        }
-                                    });                                    
                                     
+                                    //Enforce the redundant social bank pointer
+                                    request.object.set("socialBank", senderWallet.get("socialBank"));
                                     
                                     //Update the balances of sender and receiver wallets
                                     senderWallet.set("balance", senderWallet.get("balance") - params.valueInCents);
@@ -95,13 +73,12 @@ exports.func = function (request, response) {
                                             receiverWallet.save(null, {
                                                 success: function(receiverWallet) {
 
+                                                    console.log("ponto G");
                                                     //TODO: Broadcast the bitcoin transaction
                                                     //TODO: Send push notifications to the receiver user
 
-                                                    //Returns true to the sender. The mobile app should refresh balance and history to reflect the new transaction
-                                                    var result = { Result: Boolean };
-                                                    result.Result = true;    
-                                                    response.success(JSON.stringify(result));                                                
+                                                    response.success();
+
                                                 },
                                                 error: function(receiverWallet, error) {
                                                     response.error("WARNING: Inconsistent State! Couldn't save the receiver balance (sender wallet was changed): " + error.message);
@@ -117,33 +94,33 @@ exports.func = function (request, response) {
                                     
                                     break;
                                 case 0:
-                                    response.error("Couldn't find a Wallet with bitcoinAddress: " + params.receiverAddress);                
+                                    response.error("Couldn't find a Wallet with id: " + params.receiverWallet);                
                                     return;
                                 default:
-                                    response.error("There are more then one Wallet with bitcoinAddress: " + params.receiverAddress);                
+                                    //TODO: At the beginning we used bitcoinAddress to get wallets, but now this flow doesn't make sense.
+                                    response.error("There are more then one Wallet: " + params.receiverWallet);                
                                     return
                             }
                         },
                         error: function() {
-                            response.error("Wallet query by address " + params.receiverAddress + " failed");
+                            response.error("Wallet query by id " + params.receiverWallet + " failed");
                             return;
                         }
                     });
                     
                     break;
                 case 0:
-                    response.error("Couldn't find a Wallet with bitcoinAddress: " + params.senderAddress);                
+                    response.error("Couldn't find a Wallet with id: " + params.senderWallet);                
                     return;
                 default:
-                    response.error("There are more then one Wallet with bitcoinAddress: " + params.senderAddress);                
+                    response.error("There are more then one Wallet with id: " + params.senderWallet);                
                     return
             }
         },
         error: function() {
-            response.error("Wallet query by address " + params.senderAddress + " failed");
+            response.error("Wallet query by id " + params.senderWallet + " failed");
             return;
         }
     });
-    
+        
 }
-
