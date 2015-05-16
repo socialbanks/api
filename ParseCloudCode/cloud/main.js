@@ -1,4 +1,18 @@
-//yay
+/////////////////////////
+//Events "beforSave"
+/////////////////////////
+
+var beforeSaveTransaction = require('cloud/beforeSaveTransaction.js');
+Parse.Cloud.beforeSave("Transaction", beforeSaveTransaction.func);
+
+var beforeSaveSocialMoneyIssuance = require('cloud/beforeSaveSocialMoneyIssuance.js');
+Parse.Cloud.beforeSave("SocialMoneyIssuance", beforeSaveSocialMoneyIssuance.func);
+
+
+/////////////////////////
+//API functions
+/////////////////////////
+
 var hello = require('cloud/hello.js');
 Parse.Cloud.define("hello", hello.func);
 
@@ -20,10 +34,4 @@ Parse.Cloud.define("send", f.func);
 
 var create_wallet = require('cloud/create_wallet.js');
 Parse.Cloud.define("create_wallet", create_wallet.func);
-
-var beforeSaveTransaction = require('cloud/beforeSaveTransaction.js');
-Parse.Cloud.beforeSave("Transaction", beforeSaveTransaction.func);
-
-var beforeSaveSocialMoneyIssuance = require('cloud/beforeSaveSocialMoneyIssuance.js');
-Parse.Cloud.beforeSave("SocialMoneyIssuance", beforeSaveSocialMoneyIssuance.func);
 

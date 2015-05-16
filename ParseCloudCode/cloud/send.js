@@ -6,10 +6,11 @@ exports.func = function (request, response) {
 		response, 
 		"send",
 		{
-			"source"      : request.params.source, 
-			"asset"       : request.params.asset, 
-			"quantity"    : request.params.quantity, 
-			"destination" : request.params.destination
+			"source"         : request.params.source, 
+			"asset"          : request.params.asset, 
+			"quantity"       : request.params.quantity, 
+			"destination"    : request.params.destination,
+            "fee"            : 0      
 		}
 	);
 }
