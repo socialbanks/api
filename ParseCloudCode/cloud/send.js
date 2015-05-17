@@ -1,16 +1,24 @@
 var InvokeMethodCounterparty = require('cloud/InvokeMethodCounterparty.js');
 
 exports.func = function (request, response) {
-	InvokeMethodCounterparty.func(
+    
+    console.log("func send");
+    console.log(request.params.quantity.toString());
+	
+    InvokeMethodCounterparty.func(
 		request, 
 		response, 
-		"send",
+		"create_send",
 		{
-			"source"         : request.params.source, 
-			"asset"          : request.params.asset, 
-			"quantity"       : request.params.quantity, 
-			"destination"    : request.params.destination,
-            "fee"            : 0      
+			"source"                     : request.params.source, 
+			"destination"                : request.params.destination,
+			"quantity"                   : request.params.quantity, 
+			"asset"                      : request.params.asset, 
+			"pubkey"                     : request.params.pubkey, 
+            "allow_unconfirmed_inputs"   : true,
+            "fee"                        : 0,
+            "encoding"                   : "pubkeyhash"
+            
 		}
 	);
 }
