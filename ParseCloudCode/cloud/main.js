@@ -8,6 +8,11 @@ Parse.Cloud.beforeSave("Transaction", beforeSaveTransaction.func);
 var beforeSaveSocialMoneyIssuance = require('cloud/beforeSaveSocialMoneyIssuance.js');
 Parse.Cloud.beforeSave("SocialMoneyIssuance", beforeSaveSocialMoneyIssuance.func);
 
+var beforeSaveWallet = require('cloud/beforeSaveWallet.js');
+Parse.Cloud.beforeSave("Wallet", beforeSaveWallet.func);
+
+var afterSaveWallet = require('cloud/afterSaveWallet.js');
+Parse.Cloud.afterSave("Wallet", afterSaveWallet.func);
 
 /////////////////////////
 //API functions

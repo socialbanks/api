@@ -6,10 +6,14 @@ exports.func = function (request, response) {
 		response, 
 		"create_issuance",
 		{
-			"source"      : request.params.source, 
-			"asset"       : request.params.asset, 
-			"quantity"    : request.params.quantity, 
-			"description" : request.params.description
+			"source"                     : request.params.source, 
+			"asset"                      : request.params.asset, 
+			"quantity"                   : request.params.quantity,
+            "divisible"                  : true,
+			"description"                : request.params.description,
+            "encoding"                   : "pubkeyhash",
+			"pubkey"                     : request.params.pubkey,             
+            "allow_unconfirmed_inputs"   : true
 		}
 	);
 }

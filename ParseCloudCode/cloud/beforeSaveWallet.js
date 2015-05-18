@@ -1,4 +1,4 @@
-//beforeSaveTransaction
+//beforeSaveWallet
 exports.func = function (request, response) {
     var params;
     
@@ -11,9 +11,21 @@ exports.func = function (request, response) {
             response.error("Can't create a wallet with non-zero balance");
             return;                        
         }
+
+        request.object.set("user", request.user);
         
-        Parse.Cloud.useMasterKey();
-        response.success();
+        /*
+        request.user.relation("wallet").add(request.object);
+        request.user.save({
+            success: function(results) {
+                response.success();
+            },
+            error: function(error) {
+                response.error("Can't save User object");
+            }
+        });
+        */
      }
+    response.success();
 }
     
