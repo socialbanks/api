@@ -40,3 +40,6 @@ Parse.Cloud.define("send", f.func);
 var create_wallet = require('cloud/create_wallet.js');
 Parse.Cloud.define("create_wallet", create_wallet.func);
 
+var get_unspent = require('cloud/get_unspent.js');
+Parse.Cloud.define("get_unspent", get_unspent.func);
+
