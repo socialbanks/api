@@ -43,3 +43,8 @@ Parse.Cloud.define("create_wallet", create_wallet.func);
 var get_unspent = require('cloud/get_unspent.js');
 Parse.Cloud.define("get_unspent", get_unspent.func);
 
+//var sign_bitcoin_transaction = require('cloud/sign_bitcoin_transaction.js');
+//Parse.Cloud.define("sign_bitcoin_transaction", sign_bitcoin_transaction.func);
+
+var notify_transaction_broadcasted = require('cloud/notify_transaction_broadcasted.js');
+Parse.Cloud.define("notify_transaction_broadcasted", notify_transaction_broadcasted.func);
