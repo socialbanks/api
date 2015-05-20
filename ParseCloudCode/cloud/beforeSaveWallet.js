@@ -14,17 +14,6 @@ exports.func = function (request, response) {
 
         request.object.set("user", request.user);
         
-        /*
-        request.user.relation("wallet").add(request.object);
-        request.user.save({
-            success: function(results) {
-                response.success();
-            },
-            error: function(error) {
-                response.error("Can't save User object");
-            }
-        });
-        */
      }
     response.success();
 }
