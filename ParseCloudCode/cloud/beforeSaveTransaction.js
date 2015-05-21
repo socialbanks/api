@@ -160,7 +160,7 @@ exports.func = function (request, response) {
 
                                             //Enforce the redundant social bank pointer
                                             request.object.set("socialBank", senderWallet.get("socialBank"));
-                                            request.object.set("bitcoinTransfered", false);
+                                            request.object.set("broadcastStatus", "pending");
 
 
                                             //Update the balances of sender and receiver wallets
